@@ -8,6 +8,7 @@ param appServiceAppName string = 'myapp${uniqueString(resourceGroup().id)}'
 ])
 param environmentType string
 
+
 var storageAccountSkuName = (environmentType == 'prod') ? 'Standard_GRS' : 'Standard_LRS'
 
 resource myStorageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
