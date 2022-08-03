@@ -1,0 +1,34 @@
+name: deploy
+concurrency: deploy
+
+on: 
+  push:
+    branches: 
+      - main
+    paths: 
+      - 'deploy/**'
+
+permissions:
+  id-token: write
+  contents: read
+
+env: 
+    AZURE_RESOURCEGROUP_NAME: Demo2
+    ENVIRONMENT: nonprod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: azure/login@v1
+      with:
+        client-id: 71be6a04-3234-4cce-ac9d-0bd784e05b4a
+        tenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+        subscription-id: d178c7c4-ffb7-467e-a397-042c1d428092
+    - uses: azure/arm-deploy@v1
+      with:
+        deploymentName: ${{ github.run_number }}
+        resourceGroupName: ${{ env.AZURE_RESOURCEGROUP_NAME }}
+        template: ./deploy/main.bicep
+        parameters: environmentType=${{ env.ENVIRONMENT }}
