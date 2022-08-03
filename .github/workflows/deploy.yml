@@ -20,7 +20,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
     - uses: azure/login@v1
       with:
         client-id: 71be6a04-3234-4cce-ac9d-0bd784e05b4a
